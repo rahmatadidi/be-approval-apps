@@ -4,7 +4,7 @@ const User = require("./user.model");
 
 const Leave = sequelize.define("Leave", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  employeeId: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
+  employeeId: { type: DataTypes.INTEGER, allowNull: false },
   startDate: { type: DataTypes.DATE, allowNull: false },
   endDate: { type: DataTypes.DATE, allowNull: false },
   reason: { type: DataTypes.STRING, allowNull: false },
@@ -20,7 +20,5 @@ const Leave = sequelize.define("Leave", {
     defaultValue: "pending_head",
   },
 });
-
-Leave.belongsTo(User, { as: "employee", foreignKey: "employeeId" });
 
 module.exports = Leave;
