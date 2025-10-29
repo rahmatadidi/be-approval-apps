@@ -9,6 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", require("./routes/auth.routes"));
+app.use("/api/leaves", require("./routes/leave.routes"));
 
 sequelize.sync({ force: true }).then(async () => {
   console.log("Database Connected");
