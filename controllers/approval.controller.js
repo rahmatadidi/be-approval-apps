@@ -17,9 +17,12 @@ exports.headAction = async (req, res) => {
 
 exports.gmAction = async (req, res) => {
   const { action, comment } = req.body;
+  const leaveId = parseInt(req.params.id, 10);
+  console.log("req.params.id:", req.params.id);
+
   try {
     const leave = await ApprovalService.gmAction(
-      req.params.id,
+      leaveId,
       action,
       comment,
       req.user
@@ -29,7 +32,6 @@ exports.gmAction = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
-
 exports.revise = async (req, res) => {
   try {
     const leave = await ApprovalService.employeeRevision(
