@@ -12,7 +12,7 @@ app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/leaves", require("./routes/leave.routes"));
 app.use("/api/approval", require("./routes/approval.routes"));
 
-sequelize.sync({ force: true }).then(async () => {
+sequelize.sync().then(async () => {
   console.log("Database Connected");
   const users = [
     {

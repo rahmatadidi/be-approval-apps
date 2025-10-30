@@ -5,7 +5,7 @@ exports.headAction = async (leaveId, action, coment, user) => {
   if (!leave || leave.status !== "pending_head")
     throw new Error("Leave Not in Pending Head");
 
-  if (action === "approved") leave.status = "pending_gm";
+  if (action === "approve") leave.status = "pending_gm";
   else if (action === "revision") leave.status = "revisi";
   else if (action === "rejected") leave.status = "rejected";
   await leave.save();
@@ -19,12 +19,18 @@ exports.headAction = async (leaveId, action, coment, user) => {
   return leave;
 };
 
-exports.gmAcition = async (leaveId, action, coment, user) => {
+exports.gmAction = async (leaveId, action, comment, user) => {
   const leave = await Leave.findByPk(leaveId);
-  if (leave || leave.status !== "pending_gm")
-    throw new Error("Leave Not in Pending GM");
-  if (action === "approve") leave.status = "approved";
+  console.log("Leave found:", leave);
+
+  if (!leave) throw new Error("Leave not found");
+  if (leave.status !== "pending_gm") throw new Error("Leave Not in Pending GM");
+
+  if (action === "approved") leave.status = "approved";
   else if (action === "revision") leave.status = "revisi";
+  else if (action === "rejected") leave.status = "rejected";
+  else throw new Error("Invalid action");
+
   await leave.save();
 
   await History.create({
@@ -37,7 +43,6 @@ exports.gmAcition = async (leaveId, action, coment, user) => {
 
   return leave;
 };
-
 exports.employeeRevision = async (leaveId, newData, user) => {
   const leave = await Leave.findByPk(leaveId);
   if (leave.status !== "revisi") throw new Error("Not in revision state");

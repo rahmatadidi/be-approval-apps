@@ -1,8 +1,23 @@
-module.exports = (roles = []) => {
+const roleMiddleware = (roles) => {
   return (req, res, next) => {
-    if (!roles.includes.req.user.role) {
-      return res.status(403).json({ message: "Forbidden: insufficient role " });
+    console.log("User:", req.user);
+    console.log("Roles yang diizinkan:", roles);
+    if (!req.user) return res.status(401).json({ message: "User belum login" });
+    if (!Array.isArray(roles)) {
+      roles = [roles];
+      const allowedRoles = roles.map((r) => r.toLowerCase());
+      const userRole = req.user.role.toLowerCase();
+      if (!allowedRoles.includes(userRole)) {
+        return res
+          .status(403)
+          .json({ message: "Akses ditolak untuk role ini" });
+      }
     }
+
     next();
   };
+};
+
+module.exports = {
+  roleMiddleware,
 };
