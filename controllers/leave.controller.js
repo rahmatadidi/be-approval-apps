@@ -29,7 +29,7 @@ exports.detail = async (req, res) => {
 
     res.json(leave);
   } catch (err) {
-    console.error("DETAIL ERROR:", err); // <--- tambah ini
+    console.error("DETAIL ERROR:", err);
     res.status(400).json({ message: err.message });
   }
 };

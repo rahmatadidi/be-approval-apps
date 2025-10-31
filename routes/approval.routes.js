@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require("../middlewares/auth.middleware");
 const { roleMiddleware } = require("../middlewares/role.middleware");
 const ApprovalController = require("../controllers/approval.controller");
-// routes/approval.routes.js
+
 router.get(
   "/head",
   auth,

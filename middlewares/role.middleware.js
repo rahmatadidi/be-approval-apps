@@ -1,9 +1,5 @@
 const roleMiddleware = (...roles) => {
   return (req, res, next) => {
-    console.log("User:", req.user);
-    console.log("Roles yang diizinkan:", roles);
-    console.log("DEBUG USER DI ROUTE DETAIL:", req.user);
-
     if (!req.user) {
       return res.status(401).json({ message: "User belum login" });
     }
