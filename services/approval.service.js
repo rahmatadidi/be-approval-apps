@@ -12,6 +12,7 @@ exports.headAction = async (leaveId, action, coment, user) => {
   await History.create({
     leaveId,
     actorId: user.id,
+    employeeName: leave.employeeName,
     role: "Head",
     action,
     comment: coment,
@@ -36,6 +37,7 @@ exports.gmAction = async (leaveId, action, comment, user) => {
   await History.create({
     leaveId,
     actorId: user.id,
+    employeeName: user.username,
     role: "GM",
     action,
     comment,
@@ -57,4 +59,39 @@ exports.employeeRevision = async (leaveId, newData, user) => {
   });
 
   return leave;
+};
+exports.getHeadPending = async (page = 1, pageSize = 10) => {
+  const offset = (page - 1) * pageSize;
+
+  const { rows, count } = await Leave.findAndCountAll({
+    where: { status: "pending_head" },
+    limit: pageSize,
+    offset,
+    order: [["createdAt", "DESC"]],
+  });
+
+  return {
+    totalCount: count,
+    totalPages: Math.ceil(count / pageSize),
+    currentPage: page,
+    data: rows,
+  };
+};
+
+exports.getGmPending = async (page = 1, pageSize = 10) => {
+  const offset = (page - 1) * pageSize;
+
+  const { rows, count } = await Leave.findAndCountAll({
+    where: { status: "pending_gm" },
+    limit: pageSize,
+    offset,
+    order: [["createdAt", "DESC"]],
+  });
+
+  return {
+    totalCount: count,
+    totalPages: Math.ceil(count / pageSize),
+    currentPage: page,
+    data: rows,
+  };
 };

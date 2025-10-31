@@ -44,3 +44,26 @@ exports.revise = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
+// controllers/approval.controller.js
+exports.getHeadPending = async (req, res) => {
+  const { page = 1, pageSize = 10 } = req.query;
+
+  try {
+    const data = await ApprovalService.getHeadPending(+page, +pageSize);
+    res.json(data);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+exports.getGmPending = async (req, res) => {
+  const { page = 1, pageSize = 10 } = req.query;
+
+  try {
+    const data = await ApprovalService.getGmPending(+page, +pageSize);
+    res.json(data);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
