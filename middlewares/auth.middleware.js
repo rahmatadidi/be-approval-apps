@@ -3,6 +3,8 @@ require("dotenv").config();
 
 module.exports = (req, res, next) => {
   const authHeader = req.headers.authorization;
+  console.log("decoded user:", req.user);
+
   if (!authHeader)
     return res.status(401).json({ message: "No Token Provided" });
 

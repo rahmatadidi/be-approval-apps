@@ -5,6 +5,7 @@ const User = require("./user.model");
 const Leave = sequelize.define("Leave", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   employeeId: { type: DataTypes.INTEGER, allowNull: false },
+  employeeName: { type: DataTypes.STRING, allowNull: false },
   startDate: { type: DataTypes.DATE, allowNull: false },
   endDate: { type: DataTypes.DATE, allowNull: false },
   reason: { type: DataTypes.STRING, allowNull: false },
