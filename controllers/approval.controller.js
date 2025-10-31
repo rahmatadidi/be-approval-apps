@@ -45,7 +45,6 @@ exports.revise = async (req, res) => {
   }
 };
 
-// controllers/approval.controller.js
 exports.getHeadPending = async (req, res) => {
   const { page = 1, pageSize = 10 } = req.query;
 
